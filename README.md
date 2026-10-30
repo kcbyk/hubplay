@@ -24,10 +24,18 @@ HubPlay is a high-fidelity, modern streaming platform web clone inspired by Netf
   - Playback speed controls (0.5x, 0.75x, 1x, 1.25x, 1.5x).
   - Episode selector drawer.
   - Full keyboard shortcuts (`Space`/`K` for play/pause, `F` for fullscreen, `M` for mute, `ArrowLeft`/`ArrowRight` for seek, `Esc` to exit).
+- **Stream Resolver & Player** (`/demo`):
+  - Provider-based scraper → `{ title, poster, is_trailer, sources }` contract.
+  - Trailer detection (YouTube/Vimeo/Dailymotion + `trailer`/`fragman`/`teaser` names) so the **main feature** wins.
+  - HLS master playlist parsing with quality ladders and `maxHeight` capping; MP4 and embed fallbacks.
+  - Range-aware local media serving and a built-in open-licence demo library.
+  - See [`docs/stream-resolver.md`](docs/stream-resolver.md).
 - **Web Scraper Scripts**:
   - `npm run scrape`: Scrapes real Netflix browse catalogs using `ego-browser`.
   - `npm run scrape:hdfilm`: Scrapes IMDb top movies from Hdfilmcehennemi robot using `ego-browser`.
   - `npm run sync`: Syncs and formats scraped movies directly into the catalog.
+  - `npm run stream:search` / `npm run stream:resolve`: Stream resolver CLI.
+  - `npm test`: Unit tests for the resolver, HLS parser, headers, ranges and DOM extraction.
 
 ## 🚀 Getting Started
 
@@ -60,6 +68,43 @@ npm run build
 npm start
 ```
 
+## 🎬 Stream Resolver
+
+The stream layer turns a media provider into the exact JSON contract below and
+hands it to the player. Works with HLS (`.m3u8`), DASH, progressive MP4 and raw
+embeds.
+
+```json
+{
+  "title": "Big Buck Bunny",
+  "poster": null,
+  "is_trailer": false,
+  "sources": [{ "server": "Internet Archive", "file": "https://.../movie.mp4", "type": "mp4" }]
+}
+```
+
+```bash
+# Search + resolve from the CLI
+node lib/stream/cli.mjs search "metropolis" --provider internet-archive
+node lib/stream/cli.mjs resolve local big-buck-bunny --json
+
+# Or over HTTP
+curl "http://localhost:3000/api/stream/resolve?provider=local&id=frog&maxHeight=720"
+```
+
+Open [http://localhost:3000/demo](http://localhost:3000/demo) for the interactive
+browser. Two providers ship by default: **Internet Archive** (public-domain and
+openly licensed cinema) and **Local Library** (`MEDIA_ROOT`, defaults to `./media`).
+
+```bash
+MEDIA_ROOT=/mnt/nas/films npm run dev
+```
+
+**Scope:** this layer targets content you own, are licensed to distribute, or
+that is explicitly free to share. It deliberately contains no bot-protection
+bypass, no obfuscated-player unpacking and no site-specific extractors aimed at
+unlicensed streaming hosts. Details in [`docs/stream-resolver.md`](docs/stream-resolver.md).
+
 ## 🛠 Tech Stack
 
 - **Framework**: Next.js 14
@@ -67,6 +112,7 @@ npm start
 - **Icons**: FontAwesome 6 & Lucide
 - **Styling**: Vanilla CSS (Netflix Design System)
 - **Browser Automation**: ego-browser
+- **Streaming**: hls.js, custom HLS playlist parser, Node 22 `fetch` with retry/timeout
 
 ## 📄 License
 

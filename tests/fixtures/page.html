@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <title>Örnek Film — İzle</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Movie",
+        "name": "Örnek Film",
+        "image": "https://img.example.com/poster.jpg",
+        "description": "Test amaçlı örnek film kaydı.",
+        "datePublished": "1922-03-04",
+        "trailer": {
+          "@type": "VideoObject",
+          "embedUrl": "https://www.youtube.com/embed/dQw4w9WgXcQ"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div class="player">
+      <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" allowfullscreen></iframe>
+      <iframe data-src="https://media.example.com/embed/movie-1" loading="lazy"></iframe>
+      <iframe src="about:blank"></iframe>
+    </div>
+    <script>
+      var player = {
+        sources: [
+          { file: "https://media.example.com/hls/movie-1/master.m3u8", type: "hls" },
+          { file: "https://media.example.com/files/movie-1-trailer.mp4", type: "mp4" }
+        ]
+      };
+    </script>
+  </body>
+</html>
