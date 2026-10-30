@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Netflix Clone - Ana Sayfa</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="https://assets.nflxext.com/ffe/siteui/common/icons/nficon2016.ico">
+  <!-- Font Awesome for Netflix-style icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="netflix-dark">
+
+  <!-- ==================== 1. PROFILE GATE SCREEN ("KİM İZLİYOR?") ==================== -->
+  <div id="profile-gate" class="profile-gate-screen">
+    <header class="gate-header">
+      <div class="logo">
+        <svg viewBox="0 0 111 30" class="netflix-logo-svg" aria-hidden="true">
+          <path fill="#E50914" d="M105.062 14.28L111 30c-1.75-.25-3.499-.563-5.28-.845l-3.345-8.686-3.437 7.969c-1.687-.282-3.344-.376-5.031-.595l6.042-13.75-5.843-13.782c1.72-.094 3.376-.094 5.094-.094l3.188 7.844 3.156-7.844h5.032l-5.594 14.063zM90.47 16.749v7.844c-1.531-.157-3.094-.25-4.656-.344V.344h4.656v16.405zm-9.375-7.906h-5.063v16.031c-1.562-.125-3.125-.219-4.688-.313V.344h9.75v8.499zm-13.5 15.656c-1.562-.125-3.125-.219-4.688-.313V.344h4.688v24.155zm-8.813-9.531c-1.78-.125-3.531-.25-5.312-.344v9.063c-1.562-.094-3.125-.188-4.688-.25V.344h10v8.625h-5.312v5.344zm-14.437 8.313c-1.562-.094-3.125-.157-4.688-.219V8.844h-3.438V.344h11.563v8.5h-3.437v14.437zm-14.812-.125c-1.562-.063-3.125-.125-4.688-.188V.344h10v8.625h-5.312v5.344c-1.78-.125-3.531-.25-5.312-.344v9.063zm-14.438-.125c-1.562-.063-3.125-.094-4.688-.125V.344h4.688v22.844zM4.688 22.906C3.125 22.875 1.562 22.844 0 22.813V.344h4.688v22.562z"></path>
+        </svg>
+      </div>
+    </header>
+
+    <div class="gate-content">
+      <h1 class="gate-title">Kim izliyor?</h1>
+      <div class="profile-list" id="profile-list-container">
+        <!-- Rendered via JS from NETFLIX_DATA.userProfiles -->
+      </div>
+      <button class="manage-profiles-btn" id="btn-manage-profiles">Profil Yönetimi</button>
+    </div>
+  </div>
+
+  <!-- ==================== 2. MAIN NETFLIX BROWSE INTERFACE ==================== -->
+  <div id="browse-app" class="browse-app hidden">
+
+    <!-- Top Sticky Navbar -->
+    <nav class="netflix-nav" id="main-nav">
+      <div class="nav-left">
+        <a href="#" class="logo-link" id="logo-refresh">
+          <svg viewBox="0 0 111 30" class="netflix-logo-svg" aria-hidden="true">
+            <path fill="#E50914" d="M105.062 14.28L111 30c-1.75-.25-3.499-.563-5.28-.845l-3.345-8.686-3.437 7.969c-1.687-.282-3.344-.376-5.031-.595l6.042-13.75-5.843-13.782c1.72-.094 3.376-.094 5.094-.094l3.188 7.844 3.156-7.844h5.032l-5.594 14.063zM90.47 16.749v7.844c-1.531-.157-3.094-.25-4.656-.344V.344h4.656v16.405zm-9.375-7.906h-5.063v16.031c-1.562-.125-3.125-.219-4.688-.313V.344h9.75v8.499zm-13.5 15.656c-1.562-.125-3.125-.219-4.688-.313V.344h4.688v24.155zm-8.813-9.531c-1.78-.125-3.531-.25-5.312-.344v9.063c-1.562-.094-3.125-.188-4.688-.25V.344h10v8.625h-5.312v5.344zm-14.437 8.313c-1.562-.094-3.125-.157-4.688-.219V8.844h-3.438V.344h11.563v8.5h-3.437v14.437zm-14.812-.125c-1.562-.063-3.125-.125-4.688-.188V.344h10v8.625h-5.312v5.344c-1.78-.125-3.531-.25-5.312-.344v9.063zm-14.438-.125c-1.562-.063-3.125-.094-4.688-.125V.344h4.688v22.844zM4.688 22.906C3.125 22.875 1.562 22.844 0 22.813V.344h4.688v22.562z"></path>
+          </svg>
+        </a>
+        <ul class="nav-links">
+          <li class="active"><a href="#home">Ana Sayfa</a></li>
+          <li><a href="#diziler">Diziler</a></li>
+          <li><a href="#filmler">Filmler</a></li>
+          <li><a href="#oyunlar">Oyunlar</a></li>
+          <li><a href="#yeni">Yeni ve Popüler</a></li>
+          <li><a href="#listem" id="nav-my-list">Listem <span class="badge-count" id="my-list-count">0</span></a></li>
+        </ul>
+      </div>
+
+      <div class="nav-right">
+        <!-- Search bar -->
+        <div class="search-box" id="search-box">
+          <button class="search-btn" id="search-toggle" aria-label="Arama">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <input type="text" id="search-input" placeholder="Başlıklar, kişiler, türler..." class="search-input">
+        </div>
+
+        <a href="#cocuk" class="nav-kids-link">Çocuk</a>
+
+        <!-- Notifications Bell -->
+        <div class="nav-item notifications-wrapper">
+          <button class="icon-btn" id="bell-btn" aria-label="Bildirimler">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notification-dot"></span>
+          </button>
+          <div class="notifications-dropdown hidden" id="notifications-menu">
+            <div class="notification-item">
+              <img src="https://occ-0-7332-778.1.nflxso.net/dnm/api/v6/LSExTNdA1vCOYNZ8eHZ6J0eyIcQ/AAAABbowFjE41I2xDVf37Jx5PLimyLhSCqJp_Z0vF2LehdUK2K7UUdBnbkahNGTX8_ta-p9Cva5ilxYqxF34jp73eP4VMOdZki8UsG2AFAyu-qlS_GdlicyplGpJiDmfIWCBlOWjkQRpaJ1kMjlZtE-f-xZfD5TksOeDXDB3UxrJowjtkVLubtlSdaYjbAI1S8ehzNFdjCzR9DTbz1qnWSpxRg.webp?r=0a2" alt="Lupin">
+              <div class="notif-text">
+                <strong>Yeni Sezon Geldi</strong>
+                <p>Lupin 3. Kısım yayında. Hemen izle!</p>
+                <span class="notif-time">2 gün önce</span>
+              </div>
+            </div>
+            <div class="notification-item">
+              <img src="https://occ-0-7332-778.1.nflxso.net/dnm/api/v6/a0rzcqaxbY-vbvJ_p52ifDlKBbg/AAAABWkSNXHDFmLUt5_DWPK8NjV3dxH7i-c0fc0hjzat8T6P7wlDfVbKegyisf2g_FmoOHPUhhfkvNPBLoD-6W-py-rW1cy3F3LmJknn.webp?r=42f" alt="Berlin">
+              <div class="notif-text">
+                <strong>Günün 1 Numarası</strong>
+                <p>Berlin bugün Türkiye'de 1 numara.</p>
+                <span class="notif-time">Bugün</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Menu Dropdown -->
+        <div class="nav-item profile-menu-wrapper" id="profile-menu-wrapper">
+          <div class="current-profile-btn" id="active-profile-trigger">
+            <img src="" alt="Profile Avatar" id="header-avatar" class="nav-avatar-img">
+            <i class="fa-solid fa-caret-down caret-icon"></i>
+          </div>
+          <div class="profile-dropdown hidden" id="profile-dropdown-menu">
+            <div class="dropdown-profiles" id="dropdown-other-profiles">
+              <!-- other profiles populated by JS -->
+            </div>
+            <div class="dropdown-divider"></div>
+            <ul class="dropdown-links">
+              <li><a href="#" id="btn-switch-profile"><i class="fa-solid fa-users"></i> Profil Değiştir</a></li>
+              <li><a href="#"><i class="fa-solid fa-gear"></i> Hesap</a></li>
+              <li><a href="#"><i class="fa-regular fa-circle-question"></i> Yardım Merkezi</a></li>
+              <div class="dropdown-divider"></div>
+              <li><a href="#" id="btn-signout">Netflix Oturumunu Kapat</a></li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </nav>
+
+    <!-- Billboard Hero Banner -->
+    <header class="hero-billboard" id="hero-billboard">
+      <div class="hero-bg" id="hero-bg">
+        <div class="hero-vignette"></div>
+        <div class="hero-bottom-gradient"></div>
+      </div>
+
+      <div class="hero-info">
+        <div class="hero-title-container">
+          <!-- Logo image if available or styled title -->
+          <img src="" alt="Title Logo" id="hero-title-logo" class="hero-title-logo hidden">
+          <h1 id="hero-title-text" class="hero-title-text">BERLIN</h1>
+        </div>
+
+        <div class="hero-meta">
+          <span class="hero-type" id="hero-type">Dizi</span>
+          <span class="meta-dot">•</span>
+          <span class="hero-genre" id="hero-genre">Drama • Soygun</span>
+          <span class="meta-dot">•</span>
+          <span class="hero-year" id="hero-year">2026</span>
+          <span class="meta-dot">•</span>
+          <span class="hero-badge" id="hero-rating">18+</span>
+        </div>
+
+        <p class="hero-synopsis" id="hero-synopsis">
+          Bir Dük Sevilla'da paha biçilemez bir tabloyu çalmaları için Berlin ve çetesinin kapısını çalar...
+        </p>
+
+        <div class="hero-buttons">
+          <button class="btn btn-play" id="btn-hero-play">
+            <i class="fa-solid fa-play"></i> Oynat
+          </button>
+          <button class="btn btn-more-info" id="btn-hero-more-info">
+            <i class="fa-solid fa-circle-info"></i> Daha Fazla Bilgi
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Billboard Controls (Sound + Age badge) -->
+      <div class="hero-right-controls">
+        <button class="audio-toggle-btn" id="audio-toggle" aria-label="Sesi aç/kapat">
+          <i class="fa-solid fa-volume-xmark" id="audio-icon"></i>
+        </button>
+        <div class="age-badge-container">
+          <span class="age-box">18+</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Rows Catalog Section -->
+    <main class="catalog-content" id="catalog-content">
+      <!-- Search Results Container (hidden by default) -->
+      <section id="search-results-section" class="row-section hidden">
+        <h2 class="row-title">Arama Sonuçları</h2>
+        <div class="search-grid" id="search-grid-container"></div>
+      </section>
+
+      <!-- Standard Rows populated via JS -->
+      <div id="catalog-rows-container"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="netflix-footer">
+      <div class="footer-socials">
+        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="#" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+      <ul class="footer-links">
+        <li><a href="#">Sesli Betimleme</a></li>
+        <li><a href="#">Yardım Merkezi</a></li>
+        <li><a href="#">Hediye Kartları</a></li>
+        <li><a href="#">Medya Merkezi</a></li>
+        <li><a href="#">Yatırımcı İlişkileri</a></li>
+        <li><a href="#">İş İmkanları</a></li>
+        <li><a href="#">Kullanım Koşulları</a></li>
+        <li><a href="#">Gizlilik</a></li>
+        <li><a href="#">Yasal Hükümler</a></li>
+        <li><a href="#">Çerez Tercihleri</a></li>
+        <li><a href="#">Kurumsal Bilgiler</a></li>
+        <li><a href="#">Bize Ulaşın</a></li>
+      </ul>
+      <button class="service-code-btn">Hizmet Kodu</button>
+      <p class="copyright">© 1997-2026 Netflix Clone, Inc. — EGO-Browser ile Oluşturuldu.</p>
+    </footer>
+
+  </div>
+
+  <!-- ==================== 3. DETAIL MODAL POPUP ==================== -->
+  <div id="detail-modal" class="detail-modal-overlay hidden">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="modal-close" aria-label="Kapat">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="modal-banner" id="modal-banner">
+        <div class="modal-video-wrapper" id="modal-video-container">
+          <!-- Video or Backdrop Image -->
+        </div>
+        <div class="modal-banner-gradient"></div>
+        <div class="modal-banner-content">
+          <h2 id="modal-title" class="modal-title">Başlık</h2>
+          <div class="modal-actions">
+            <button class="btn btn-play" id="btn-modal-play">
+              <i class="fa-solid fa-play"></i> Oynat
+            </button>
+            <button class="icon-circle-btn" id="btn-modal-add-list" title="Listeme Ekle">
+              <i class="fa-solid fa-plus" id="modal-list-icon"></i>
+            </button>
+            <button class="icon-circle-btn" id="btn-modal-like" title="Beğendim">
+              <i class="fa-regular fa-thumbs-up"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-meta-left">
+          <div class="modal-tags">
+            <span class="match-score" id="modal-match">%98 Eşleşme</span>
+            <span class="year" id="modal-year">2026</span>
+            <span class="rating-box" id="modal-rating">18+</span>
+            <span class="quality-badge">HD</span>
+            <span class="quality-badge">5.1 Ses</span>
+          </div>
+          <p class="modal-desc" id="modal-desc">Detaylı açıklama...</p>
+        </div>
+
+        <div class="modal-meta-right">
+          <div class="info-row">
+            <span class="info-label">Oyuncu Kadrosu:</span>
+            <span class="info-val" id="modal-cast">Pedro Alonso, Michelle Jenner, Tristán Ulloa</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Türler:</span>
+            <span class="info-val" id="modal-genres">Drama, Suç, Heyecanlı</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Bu Dizi:</span>
+            <span class="info-val">Zekice, Sürükleyici, Soluksuz</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- More Like This Grid in Modal -->
+      <div class="modal-similar-section">
+        <h3>Benzer Yapımlar</h3>
+        <div class="similar-grid" id="modal-similar-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-message" class="toast-message hidden"></div>
+
+  <!-- Audio element for authentic Netflix sound on profile select -->
+  <audio id="netflix-intro-sound" preload="auto">
+    <source src="https://assets.mixkit.co/active_storage/sfx/2874/2874-preview.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "netflix-clone",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p 3000",
+    "scrape": "cmd.exe /c \"ego-browser nodejs < scripts/scrape-netflix.mjs\"",
+    "scrape:hdfilm": "cmd.exe /c \"ego-browser.exe nodejs < scripts/scrape-hdfilmcehennemi.mjs\"",
+    "sync": "node scripts/sync-catalog.js",
+    "apify:search": "node scripts/apify-search.js"
+  },
+  "dependencies": {
+    "next": "^14.2.15",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "lucide-react": "^0.453.0"
+  }
+}
