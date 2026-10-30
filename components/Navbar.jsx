@@ -129,6 +129,9 @@ export default function Navbar({
               Listem <span className="badge-count">{myListCount}</span>
             </button>
           </li>
+          <li>
+            <a href="/demo">Stream Resolver</a>
+          </li>
         </ul>
       </div>
 
